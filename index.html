@@ -1142,8 +1142,6 @@
     btn.textContent = '送出中…';
     btn.disabled = true;
     const data = new FormData(this);
-    data.append('access_key', '44d63535-e632-4e5b-a91a-1b13c59237f2');
-    data.append('subject', 'LaLalennn.studio 委託詢問');
     try {
       const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
       const json = await res.json();
