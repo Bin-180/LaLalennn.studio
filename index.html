@@ -1153,11 +1153,13 @@
         msg.style.display = 'block';
         this.reset();
       } else {
-        throw new Error();
+        msg.style.color = 'var(--dusty-rose)';
+        msg.textContent = '錯誤：' + (json.message || JSON.stringify(json));
+        msg.style.display = 'block';
       }
-    } catch {
+    } catch (err) {
       msg.style.color = 'var(--dusty-rose)';
-      msg.textContent = '送出失敗，請稍後再試或直接 DM Instagram。';
+      msg.textContent = '送出失敗：' + err.message;
       msg.style.display = 'block';
     }
     btn.textContent = '送出委託詢問 →';
