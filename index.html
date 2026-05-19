@@ -1043,8 +1043,7 @@
   </div>
 
   <form
-    action="https://api.web3forms.com/submit"
-    method="POST"
+    id="contactForm"
     class="contact-form-area"
   >
     <input type="hidden" name="access_key" value="44d63535-e632-4e5b-a91a-1b13c59237f2">
@@ -1088,7 +1087,8 @@
       <label>委託說明</label>
       <textarea name="委託說明" placeholder="請簡短說明您的想法、用途、風格偏好，或任何想讓我了解的細節..."></textarea>
     </div>
-    <button type="submit" class="submit-btn">送出委託詢問 →</button>
+    <button type="submit" class="submit-btn" id="submitBtn">送出委託詢問 →</button>
+    <p id="formMsg" style="display:none;margin-top:1rem;font-size:0.9rem;text-align:center;"></p>
   </form>
 </section>
 
@@ -1132,6 +1132,36 @@
   // Close menu when a link is clicked
   document.querySelectorAll('.nav-close').forEach(a => {
     a.addEventListener('click', () => links.classList.remove('open'));
+  });
+
+  // Contact form submission
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMsg');
+    btn.textContent = '送出中…';
+    btn.disabled = true;
+    const data = new FormData(this);
+    data.append('access_key', '44d63535-e632-4e5b-a91a-1b13c59237f2');
+    data.append('subject', 'LaLalennn.studio 委託詢問');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        msg.style.color = 'var(--umber)';
+        msg.textContent = '✓ 已成功送出！我會盡快與你聯絡 🎨';
+        msg.style.display = 'block';
+        this.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      msg.style.color = 'var(--dusty-rose)';
+      msg.textContent = '送出失敗，請稍後再試或直接 DM Instagram。';
+      msg.style.display = 'block';
+    }
+    btn.textContent = '送出委託詢問 →';
+    btn.disabled = false;
   });
 </script>
 </body>
