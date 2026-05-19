@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaLalennn.studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F0E6;
+    --parchment: #EDE0CC;
+    --sand: #D4B896;
+    --terra: #B07D5A;
+    --umber: #7A4F35;
+    --bark: #3E2210;
+    --gold: #C49A3C;
+    --sage: #8A9E7B;
+    --dusty-rose: #C8967A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--bark);
+    font-family: 'Lora', 'Noto Serif TC', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.4rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(247,240,230,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(180,140,100,0.15);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--umber);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Lora', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--bark); }
+
+  /* Hamburger */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--umber);
+    transition: all 0.3s;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 6rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--parchment) 0%, transparent 70%);
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 5.5rem);
+    line-height: 1.1;
+    color: var(--bark);
+    margin-bottom: 1.5rem;
+    word-break: break-word;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--terra);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--umber);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    opacity: 0.85;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 2rem;
+    background: var(--bark);
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  .hero-cta:hover { background: var(--terra); gap: 1.2rem; }
+
+  .hero-illustration {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1.2s ease forwards;
+  }
+
+  .hero-frame {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .hero-frame img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 7rem 6rem; }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 3.2rem);
+    line-height: 1.15;
+    color: var(--bark);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--parchment);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual { position: relative; }
+
+  .about-photo-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--sand);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-tag {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    background: var(--terra);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .about-tag strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+
+  .about-text p {
+    font-size: 0.97rem;
+    line-height: 2;
+    color: var(--umber);
+    margin-bottom: 1.2rem;
+  }
+
+  .about-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .skill-tag {
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--sand);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--umber);
+    background: transparent;
+    transition: all 0.3s;
+  }
+
+  .skill-tag:hover {
+    background: var(--bark);
+    border-color: var(--bark);
+    color: var(--cream);
+  }
+
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--cream); }
+
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .portfolio-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .category-block { margin-bottom: 1rem; }
+
+  .category-heading {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-heading-line {
+    flex: 1;
+    height: 1px;
+    background: var(--sand);
+    opacity: 0.5;
+  }
+
+  .category-heading-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terra);
+    white-space: nowrap;
+    font-family: 'Lora', serif;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .portfolio-thumb {
+    width: 100%;
+    display: block;
+    position: relative;
+    transition: transform 0.6s ease;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .portfolio-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .portfolio-item:hover .portfolio-thumb img {
+    transform: scale(1.04);
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(62,34,16,0.0);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    transition: background 0.4s ease;
+  }
+
+  .portfolio-item:hover .portfolio-overlay {
+    background: rgba(62,34,16,0.65);
+  }
+
+  .portfolio-info {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  .portfolio-item:hover .portfolio-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .portfolio-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .portfolio-info span {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--sand);
+    text-transform: uppercase;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--bark);
+    color: var(--cream);
+  }
+
+  #services .section-title { color: var(--parchment); }
+  #services .section-label { color: var(--gold); }
+  #services .section-label::before { background: var(--gold); }
+
+  .services-intro {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--sand);
+    max-width: 560px;
+    margin-bottom: 4rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: rgba(255,255,255,0.04);
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.3s ease;
+  }
+
+  .service-card:hover { background: rgba(255,255,255,0.08); }
+
+  .service-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: rgba(196,154,60,0.2);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--parchment);
+    margin-bottom: 0.8rem;
+  }
+
+  .service-card p {
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: rgba(212,184,150,0.75);
+    margin-bottom: 2rem;
+  }
+
+  .service-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+  }
+
+  .service-price sup { font-size: 0.9rem; font-family: 'Lora', serif; }
+
+  .service-price small {
+    font-size: 0.72rem;
+    font-family: 'Lora', serif;
+    color: var(--sand);
+    letter-spacing: 0.08em;
+  }
+
+  .service-divider {
+    width: 30px; height: 1px;
+    background: var(--gold);
+    margin: 1.5rem 0;
+  }
+
+  .service-includes {
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--sand);
+    line-height: 2;
+  }
+
+  .service-includes li::before { content: '— '; color: var(--gold); opacity: 0.6; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--parchment);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-desc {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--umber);
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--umber);
+    font-size: 0.9rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(180,140,100,0.2);
+    transition: all 0.3s;
+  }
+
+  .contact-link-item:hover { color: var(--terra); padding-left: 0.5rem; }
+
+  .contact-icon {
+    width: 38px; height: 38px;
+    background: var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .contact-link-item:hover .contact-icon { background: var(--terra); color: white; }
+
+  .form-group { margin-bottom: 1.5rem; }
+
+  .form-group label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    color: var(--bark);
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--terra); }
+
+  .form-group textarea { height: 120px; resize: none; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--terra);
+    color: var(--cream);
+    border: none;
+    font-family: 'Lora', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: var(--bark); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bark);
+    color: rgba(212,184,150,0.5);
+    padding: 2.5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer a {
+    color: rgba(212,184,150,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  footer a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ════════════════════════════════════
+     TABLET  (≤ 1024px)
+  ════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2rem; }
+    section { padding: 5rem 3rem; }
+    footer { padding: 2rem 3rem; }
+
+    #hero {
+      padding: 6rem 3rem 4rem;
+      gap: 3rem;
+    }
+
+    #about { gap: 3rem; }
+    #contact { gap: 3rem; }
+
+    .services-grid { grid-template-columns: 1fr; gap: 1px; }
+    .service-card { padding: 2rem 1.5rem; }
+  }
+
+  /* ════════════════════════════════════
+     MOBILE  (≤ 768px)
+  ════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* Nav */
+    nav { padding: 1rem 1.2rem; }
+
+    .nav-toggle { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(247,240,230,0.97);
+      backdrop-filter: blur(12px);
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(180,140,100,0.15);
+      box-shadow: 0 8px 24px rgba(62,34,16,0.1);
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links li a {
+      display: block;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(180,140,100,0.1);
+      font-size: 0.85rem;
+    }
+
+    /* Section padding */
+    section { padding: 4rem 1.4rem; }
+    footer { padding: 2rem 1.4rem; flex-direction: column; text-align: center; gap: 1.2rem; }
+    footer > div { justify-content: center; }
+
+    /* Hero：單欄，圖片在下 */
+    #hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      padding: 7rem 1.4rem 3rem;
+      gap: 2.5rem;
+      text-align: center;
+    }
+
+    .hero-bg-circle { display: none; }
+
+    .hero-eyebrow {
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .hero-desc { margin-left: auto; margin-right: auto; }
+
+    .hero-cta { margin: 0 auto; }
+
+    .hero-illustration { order: -1; }
+
+    .hero-frame {
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    /* About：單欄 */
+    #about {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .about-visual { max-width: 320px; margin: 0 auto; }
+
+    .about-tag {
+      bottom: -1rem;
+      right: -0.5rem;
+      padding: 0.7rem 1rem;
+    }
+
+    .about-tag strong { font-size: 1.4rem; }
+
+    .about-text { padding-top: 1rem; }
+
+    /* Portfolio */
+    .portfolio-row {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+
+    .portfolio-info h3 { font-size: 0.85rem; }
+
+    /* Services：單欄 */
+    .services-grid { grid-template-columns: 1fr; }
+
+    /* Contact：單欄 */
+    #contact {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    /* Form */
+    .form-row { grid-template-columns: 1fr; }
+
+    /* Footer links 換行 */
+    footer > div { flex-wrap: wrap; gap: 1rem; }
+  }
+
+  /* ════════════════════════════════════
+     SMALL MOBILE  (≤ 400px)
+  ════════════════════════════════════ */
+  @media (max-width: 400px) {
+    section { padding: 3.5rem 1rem; }
+
+    .hero-title { font-size: 1.8rem; }
+
+    .category-grid { grid-template-columns: 1fr; }
+
+    .about-visual { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">LaLalennn Studio</div>
+  <div class="nav-toggle" id="navToggle" aria-label="開啟選單">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" class="nav-close">關於我</a></li>
+    <li><a href="#portfolio" class="nav-close">作品集</a></li>
+    <li><a href="#services" class="nav-close">服務</a></li>
+    <li><a href="#contact" class="nav-close">聯絡</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">主視覺設計 · LOGO設計 · 似顏繪 · 客製設計</div>
+    <h1 class="hero-title">
+      LaLalennn.studio<br>
+   
+    </h1>
+    <p class="hero-desc"></p>
+    <a href="#portfolio" class="hero-cta">
+      瀏覽作品集
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="hero-illustration">
+    <div class="hero-frame">
+      <img src="LENNN與皮皮.png" alt="LENNN與皮皮">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="reveal">
+  <div class="about-visual reveal">
+    <div class="about-photo-frame">
+      <img src="小魚本魚.png" alt="小魚本魚">
+    </div>
+    <div class="about-tag">
+      <strong>5+</strong>
+      年創作經驗
+    </div>
+  </div>
+
+  <div class="about-text">
+    <div class="section-label">關於我</div>
+    <h2 class="section-title">𝙇𝙀𝙉𝙉𝙉 與她的<br>監工皮皮桑</h2>
+    <p>嗨，我是 𝙇𝙀𝙉𝙉𝙉，一位熱愛畫畫的插畫創作者，身邊還有一位永遠在旁邊監工的好夥伴——皮皮桑 🐾</p>
+    <p>我喜歡用溫暖的色調和細膩的線條，把人與人之間的珍貴時刻畫下來。每一幅作品都是獨一無二的，因為每個故事都值得被好好記錄。</p>
+    <p>目前開放主視覺設計、Logo 設計、似顏繪、客製卡片與菜單等委託，歡迎 DM 洽詢 🎨</p>
+    <div class="about-skills">
+      <span class="skill-tag">主視覺設計</span>
+      <span class="skill-tag">Logo 設計</span>
+      <span class="skill-tag">似顏繪</span>
+      <span class="skill-tag">卡片客製</span>
+      <span class="skill-tag">菜單設計</span>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header reveal">
+    <div>
+      <div class="section-label">精選作品</div>
+      <h2 class="section-title">作品集</h2>
+    </div>
+    <a href="#contact" style="font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);text-decoration:none;border-bottom:1px solid var(--terra);padding-bottom:2px;">查看全部作品 →</a>
+  </div>
+
+  <div class="reveal">
+    <!-- 第一排 -->
+    <div class="portfolio-row">
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">主視覺設計</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="鹿口嚴選伴手禮.jpg" alt="鹿口嚴選伴手禮"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>鹿口嚴選伴手禮</h3><span>主視覺設計 · 2025</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="ONE NIGHT IN 北港.jpg" alt="ONE NIGHT IN 北港"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>ONE NIGHT IN 北港</h3><span>主視覺設計 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="饕饕丸噗哧跑.jpg" alt="饕饕丸噗哧跑"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>饕饕丸噗哧跑</h3><span>主視覺設計 · 2025</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="北港在地生活.jpg" alt="北港在地生活"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>北港在地生活</h3><span>主視覺設計 · 2022</span></div></div></div>
+        </div>
+      </div>
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">LOGO設計</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="雅惠製食所.jpg" alt="雅惠製食所"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>雅惠製食所</h3><span>LOGO設計 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="屋製造所.jpg" alt="屋製造所"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>パン屋製造所</h3><span>LOGO設計 · 2023</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="Nimo.jpg" alt="Nimo"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>Nimo</h3><span>LOGO設計 · 2023</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="拾日.jpg" alt="拾日"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>拾日</h3><span>LOGO設計 · 2026</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二排 -->
+    <div class="portfolio-row">
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">似顏繪</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="女生似顏繪.jpg" alt="女生似顏繪"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>女生似顏繪</h3><span>似顏繪 · 2023</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="E.so.jpg" alt="E.so"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>E.so</h3><span>似顏繪 · 2020</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="李沐.jpg" alt="李沐"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>李沐</h3><span>似顏繪 · 2020</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="目青.jpg" alt="目青"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>目青</h3><span>似顏繪 · 2020</span></div></div></div>
+        </div>
+      </div>
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">MV/影劇照</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="怪奇物語.jpg" alt="怪奇物語"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>怪奇物語</h3><span>MV/影劇照 · 2020</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="黑白大廚.jpg" alt="黑白大廚"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>黑白大廚</h3><span>MV/影劇照 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="如果我們還在一起.jpg" alt="如果我們還在一起"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>如果我們還在一起</h3><span>MV/影劇照 · 2021</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="當男人戀愛時.jpg" alt="當男人戀愛時"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>當男人戀愛時</h3><span>MV/影劇照 · 2021</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第三排 -->
+    <div class="portfolio-row">
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">寵物似顏繪</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="胖皮寶寶.jpg" alt="胖皮寶寶"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>胖皮寶寶</h3><span>寵物似顏繪 · 2026</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="柴犬六六.jpg" alt="柴犬六六"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>柴犬六六</h3><span>寵物似顏繪 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="虎斑貓.jpg" alt="虎斑貓"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>虎斑貓</h3><span>寵物似顏繪 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="皮皮.jpg" alt="皮皮"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>皮皮</h3><span>寵物似顏繪 · 2022</span></div></div></div>
+        </div>
+      </div>
+      <div class="category-block">
+        <div class="category-heading">
+          <span class="category-heading-tag">客製商品</span>
+          <div class="category-heading-line"></div>
+        </div>
+        <div class="category-grid">
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="實惠商店.jpg" alt="實惠商店"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>實惠商店</h3><span>客製商品 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="狗狗桌布.jpg" alt="狗狗桌布"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>狗狗桌布</h3><span>客製商品 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="皮皮兔.jpg" alt="皮皮兔"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>皮皮兔</h3><span>客製商品 · 2024</span></div></div></div>
+          <div class="portfolio-item"><div class="portfolio-thumb"><img src="饕饕丸馬上錢來.jpg" alt="饕饕丸馬上錢來"></div><div class="portfolio-overlay"><div class="portfolio-info"><h3>饕饕丸馬上錢來</h3><span>客製商品 · 2024</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="reveal">
+  <div class="section-label">服務項目</div>
+  <h2 class="section-title">委託方案</h2>
+  <p class="services-intro">每一份委託都是一段溫柔的相遇。告訴我你的故事，讓 LENNN 與皮皮桑一起幫你把它畫下來</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-number">01</span>
+      <h3>主視覺 · Logo 設計</h3>
+      <p>為品牌或活動打造專屬主視覺與 Logo，建立獨特的品牌識別，讓你的形象在眾多競爭中脫穎而出。</p>
+      <div class="service-divider"></div>
+      <ul class="service-includes">
+        <li>品牌主視覺設計</li>
+        <li>Logo 含品牌色票</li>
+        <li>提供印刷用原檔</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-number">02</span>
+      <h3>似顏繪</h3>
+      <p>以你的照片為基礎，手繪出獨一無二的人物或寵物插畫。適合紀念日禮物、婚禮小物、家庭留念，每一幅都充滿溫度。</p>
+      <div class="service-divider"></div>
+      <ul class="service-includes">
+        <li>人物 · 寵物似顏繪</li>
+        <li>依人數與風格報價</li>
+        <li>數位檔案交付</li>
+        <li>可加購實體印刷</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-number">03</span>
+      <h3>客製設計</h3>
+      <p>手機桌布、手機殼、卡片、相框、菜單等各類客製化商品設計，把插畫融入生活，讓每個細節都有你的專屬風格。</p>
+      <div class="service-divider"></div>
+      <ul class="service-includes">
+        <li>手機桌布 · 手機殼</li>
+        <li>卡片 · 相框客製</li>
+        <li>菜單設計</li>
+        <li>依需求彈性報價</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="reveal">
+  <div>
+    <div class="section-label">聯絡我</div>
+    <h2 class="section-title">開始一段<br>創作對話</h2>
+    <p class="contact-desc">有任何委託想法，歡迎透過 Instagram DM 聯絡 LENNN！皮皮桑也會在旁邊監工確保品質 🐾</p>
+    <div class="contact-links">
+      <a href="https://www.instagram.com/lalalennn.studio/" target="_blank" class="contact-link-item">
+        <div class="contact-icon">◈</div>
+        <div>
+          <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);margin-bottom:0.2rem;">Instagram（主要聯絡方式）</div>
+          @lalalennn.studio
+        </div>
+      </a>
+      <div class="contact-link-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);margin-bottom:0.2rem;">合作接案</div>
+          請直接 DM Instagram 洽詢
+        </div>
+      </div>
+      <div class="contact-link-item">
+        <div class="contact-icon">⊙</div>
+        <div>
+          <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);margin-bottom:0.2rem;">服務項目</div>
+          主視覺設計 · Logo設計 · 似顏繪 · 客製卡片 · 菜單設計
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form
+    name="委託詢問"
+    method="POST"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    class="contact-form-area"
+  >
+    <!-- Netlify 必要隱藏欄位 -->
+    <input type="hidden" name="form-name" value="委託詢問">
+    <p style="display:none"><input name="bot-field"></p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>姓名</label>
+        <input type="text" name="姓名" placeholder="您的姓名" required>
+      </div>
+      <div class="form-group">
+        <label>Instagram</label>
+        <input type="text" name="Instagram" placeholder="your instagram ID">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="Email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-group">
+      <label>委託類型</label>
+      <select name="委託類型" required>
+        <option value="">請選擇委託類型</option>
+        <option>主視覺設計</option>
+        <option>LOGO設計</option>
+        <option>似顏繪</option>
+        <option>客製創作</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>預算範圍</label>
+      <select name="預算範圍">
+        <option value="">請選擇預算</option>
+        <option>NT$ 1,000 ～ 3,000</option>
+        <option>NT$ 3,000 ～ 10,000</option>
+        <option>NT$ 10,000 以上</option>
+        <option>尚未確定，想先詢問</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>委託說明</label>
+      <textarea name="委託說明" placeholder="請簡短說明您的想法、用途、風格偏好，或任何想讓我了解的細節..."></textarea>
+    </div>
+    <button type="submit" class="submit-btn">送出委託詢問 →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2020 LaLalennn.Studio · 版權所有</span>
+  <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+    <a href="#about">關於我</a>
+    <a href="#portfolio">作品集</a>
+    <a href="#services">服務</a>
+    <a href="#contact">聯絡</a>
+  </div>
+  <span>設計與插畫 · 台灣</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 50
+      ? '0 4px 30px rgba(62,34,16,0.08)'
+      : 'none';
+  });
+
+  // Hamburger menu
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+
+  toggle.addEventListener('click', () => {
+    links.classList.toggle('open');
+  });
+
+  // Close menu when a link is clicked
+  document.querySelectorAll('.nav-close').forEach(a => {
+    a.addEventListener('click', () => links.classList.remove('open'));
+  });
+</script>
+</body>
+</html>
